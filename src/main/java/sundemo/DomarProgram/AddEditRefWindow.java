@@ -54,7 +54,7 @@ public class AddEditRefWindow extends Stage {
 		Button cancelButton = new Button("Avbryt");
 		cancelButton.setOnAction(e -> this.close());
 		
-		addRefButton = new Button("Ok");
+		addRefButton = new Button("bajs");
 		GridPane.setConstraints(addRefButton, 0, 3);
 		GridPane.setConstraints(cancelButton, 1, 3);
 		
