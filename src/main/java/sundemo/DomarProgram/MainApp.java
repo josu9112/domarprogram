@@ -1,5 +1,7 @@
 package sundemo.DomarProgram;
 
+import java.awt.Color;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 
@@ -13,11 +15,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -45,13 +51,16 @@ public class MainApp extends Application{
 		
 	
 		TableColumn<Referee, String> nameColumn = new TableColumn<>("Namn");
-		nameColumn.setMinWidth(200);
+		nameColumn.setMinWidth(100);
+		nameColumn.setStyle("-fx-background: #7F98B7; -fx-font-family: Sansation Bold; -fx-font-size: 14");
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		TableColumn<Referee, ArrayList<Team>> playingTeamColumn = new TableColumn<>("Spelar");
-		playingTeamColumn.setMinWidth(200);
+		playingTeamColumn.setMinWidth(100);
+		playingTeamColumn.setStyle("-fx-background: #7F98B7; -fx-font-family: Sansation Bold; -fx-font-size: 14");
 		playingTeamColumn.setCellValueFactory(new PropertyValueFactory<>("playsTeams"));
 		TableColumn<Referee, ArrayList<Team>> coachingTeamColumn = new TableColumn<>("Coachar");
-		coachingTeamColumn.setMinWidth(200);
+		coachingTeamColumn.setMinWidth(100);
+		coachingTeamColumn.setStyle("-fx-background: #7F98B7; -fx-font-family: Sansation Bold; -fx-font-size: 14");
 		coachingTeamColumn.setCellValueFactory(new PropertyValueFactory<>("coachTeams"));
 		
 		referees = new ArrayList<Referee>();
@@ -63,22 +72,36 @@ public class MainApp extends Application{
 		allTeams.add(new Team("DD2"));
 		
 		table = new TableView<>();
+		
 		table.getColumns().addAll(nameColumn,coachingTeamColumn,playingTeamColumn);
 		
 		HBox hbox1 = new HBox();
 		VBox vbox1 = new VBox();
 		hbox1.getChildren().addAll(b1,b2,b3);
-		hbox1.setPadding(new Insets(0,0,10,0));
 		hbox1.setSpacing(10);
-		vbox1.setPadding(new Insets(20,20,20,20));
 		vbox1.getChildren().addAll(hbox1,table);
+		vbox1.setSpacing(10);
+		
+		
+		TitledPane tPane = new TitledPane();
+		tPane.setFont(new Font("Sansation Bold",20));
+		tPane.setText("Domare");
+		tPane.setCollapsible(false);
+		tPane.setContent(vbox1);
+		tPane.setPadding(new Insets(20,20,20,20));
+		
+		
+		ImageView logo = new ImageView(new Image(new FileInputStream("C:\\Users\\John\\Desktop\\Basket\\Loggor\\kba-logo.png")));
+		
 		
 		
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane);
-		pane.setLeft(vbox1);
+		pane.setStyle("-fx-background: #013370;");
+		pane.setLeft(tPane);
+		pane.setCenter(logo);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("window");
+		primaryStage.setTitle("Kungsbacka Domarprogram v1.0");
 		primaryStage.show();
 		
 	}
