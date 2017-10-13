@@ -1,12 +1,11 @@
 package sundemo.DomarProgram;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 
-import javafx.beans.property.SimpleStringProperty;
+public class Referee implements Serializable{
 
-public class Referee {
-
+	private static final long serialVersionUID = -2310796164085353522L;
 	private String name;
 	private ArrayList<Team> playsTeams;
 	private ArrayList<Team> coachTeams;

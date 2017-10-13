@@ -1,29 +1,16 @@
 package sundemo.DomarProgram;
 
-import java.awt.Color;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
 
 import javafx.application.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -39,30 +26,8 @@ public class MainApp extends Application{
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Button b1 = new Button("Add");
-		b1.setOnAction(e -> addButtonAction());
-		Button b2 = new Button("Edit");
-		b2.setOnAction(e -> editButtonAction());
-		Button b3 = new Button ("Remove");
-		b3.setOnAction(e -> deleteButtonAction());
-		
-	
-		TableColumn<Referee, String> nameColumn = new TableColumn<>("Namn");
-		nameColumn.setMinWidth(100);
-		nameColumn.setStyle("-fx-background: #7F98B7; -fx-font-family: Sansation Bold; -fx-font-size: 14");
-		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-		TableColumn<Referee, ArrayList<Team>> playingTeamColumn = new TableColumn<>("Spelar");
-		playingTeamColumn.setMinWidth(100);
-		playingTeamColumn.setStyle("-fx-background: #7F98B7; -fx-font-family: Sansation Bold; -fx-font-size: 14");
-		playingTeamColumn.setCellValueFactory(new PropertyValueFactory<>("playsTeams"));
-		TableColumn<Referee, ArrayList<Team>> coachingTeamColumn = new TableColumn<>("Coachar");
-		coachingTeamColumn.setMinWidth(100);
-		coachingTeamColumn.setStyle("-fx-background: #7F98B7; -fx-font-family: Sansation Bold; -fx-font-size: 14");
-		coachingTeamColumn.setCellValueFactory(new PropertyValueFactory<>("coachTeams"));
-		
 		referees = new ArrayList<Referee>();
 		allTeams = new ArrayList<Team>();
 		allTeams.add(new Team("DU13"));
@@ -71,105 +36,20 @@ public class MainApp extends Application{
 		allTeams.add(new Team("DD3"));
 		allTeams.add(new Team("DD2"));
 		
-		table = new TableView<>();
-		
-		table.getColumns().addAll(nameColumn,coachingTeamColumn,playingTeamColumn);
-		
-		HBox hbox1 = new HBox();
-		VBox vbox1 = new VBox();
-		hbox1.getChildren().addAll(b1,b2,b3);
-		hbox1.setSpacing(10);
-		vbox1.getChildren().addAll(hbox1,table);
-		vbox1.setSpacing(10);
-		
-		
-		TitledPane tPane = new TitledPane();
-		tPane.setFont(new Font("Sansation Bold",20));
-		tPane.setText("Domare");
-		tPane.setCollapsible(false);
-		tPane.setContent(vbox1);
-		tPane.setPadding(new Insets(20,20,20,20));
-		
-		
 		ImageView logo = new ImageView(new Image(new FileInputStream("C:\\Users\\John\\Desktop\\Basket\\Loggor\\kba-logo.png")));
-		
-		
 		
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane);
 		pane.setStyle("-fx-background: #013370;");
-		pane.setLeft(tPane);
+		pane.setLeft(new RefPane(this));
 		pane.setCenter(logo);
+		BorderPane.setMargin(logo, new Insets(20,20,20,20));
+		
+		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Kungsbacka Domarprogram v1.0");
 		primaryStage.show();
 		
-	}
-	
-	
-	public void addButtonAction() {
-		AddEditRefWindow refWin= new AddEditRefWindow(this);
-		refWin.addRefButton.setOnAction(e -> {
-			if(!refWin.nameField.getText().equals("")) {
-				Referee ref = new Referee(refWin.nameField.getText());
-				if(!refWin.availableCoachTeams.getCheckModel().getCheckedItems().isEmpty()) {
-					for(Team a : refWin.availableCoachTeams.getCheckModel().getCheckedItems())
-						ref.setCoachTeams(a);
-				}
-				if(!refWin.availablePlayTeams.getCheckModel().getCheckedItems().isEmpty()) {
-					for(Team a : refWin.availablePlayTeams.getCheckModel().getCheckedItems())
-						ref.setPlaysTeams(a);
-				}
-				referees.add(ref);
-				table.getItems().add(ref);
-				refWin.close();
-			}
-		});
-	}
-	
-	public void editButtonAction() {
-		if(table.getSelectionModel().getSelectedItem() != null) {
-			Referee selected = table.getSelectionModel().getSelectedItem();
-			AddEditRefWindow refWin = new AddEditRefWindow(this);
-			refWin.nameField.setText(selected.getName());
-			
-			for(Team a : selected.getCoachTeams()) {
-				refWin.availableCoachTeams.getCheckModel().check(a);
-			}
-			
-			for(Team a : selected.getPlaysTeams()) {
-				refWin.availablePlayTeams.getCheckModel().check(a);
-			}
-			
-			refWin.addRefButton.setOnAction(e -> {
-				selected.setName(refWin.nameField.getText());
-				if(!refWin.availableCoachTeams.getCheckModel().getCheckedItems().isEmpty()) {
-					selected.resetListOfCoachTeams();
-					for(Team a : refWin.availableCoachTeams.getCheckModel().getCheckedItems())
-						selected.setCoachTeams(a);
-					
-				}
-				if(!refWin.availablePlayTeams.getCheckModel().getCheckedItems().isEmpty()) {
-					selected.resetListOfPlaysTeams();
-					for(Team a : refWin.availablePlayTeams.getCheckModel().getCheckedItems())
-						selected.setPlaysTeams(a);
-					
-					table.refresh();
-					refWin.close();
-				}
-				
-			});
-		}
-	}
-	
-	public void deleteButtonAction() {
-		if(table.getSelectionModel().getSelectedItem() != null) {
-			Boolean answer = ConfirmBox.display("Ta bort domare", "�r du s�ker p� att du vill ta bort domare?");
-			if(answer) {
-				referees.remove(table.getSelectionModel().getSelectedItem());
-				table.getItems().remove(table.getSelectionModel().getSelectedItem());
-			}
-		}
 	}
 	
 

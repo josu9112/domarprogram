@@ -1,9 +1,11 @@
 package sundemo.DomarProgram;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable{
 
+	private static final long serialVersionUID = 7589885191784831982L;
 	private Team team;
 	private String location;
 	private String date;
