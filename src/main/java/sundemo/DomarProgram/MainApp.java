@@ -36,7 +36,7 @@ public class MainApp extends Application{
 		allTeams.add(new Team("DD3"));
 		allTeams.add(new Team("DD2"));
 		
-		ImageView logo = new ImageView(new Image(new FileInputStream("C:\\Users\\John\\Desktop\\Basket\\Loggor\\kba-logo.png")));
+		ImageView logo = new ImageView(new Image(new FileInputStream("src\\kba-logo.png")));
 		
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane);
