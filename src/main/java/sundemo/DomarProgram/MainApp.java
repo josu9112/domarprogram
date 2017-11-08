@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -20,6 +21,7 @@ public class MainApp extends Application{
 	public ArrayList<Referee> referees;
 	public ArrayList<Team> allTeams;
 	public TableView<Referee> table;
+	public ArrayList<Game> allGames;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -30,6 +32,7 @@ public class MainApp extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		referees = new ArrayList<Referee>();
 		allTeams = new ArrayList<Team>();
+		allGames = new ArrayList<Game>();
 		allTeams.add(new Team("DU13"));
 		allTeams.add(new Team("DU15"));
 		allTeams.add(new Team("HD3"));
@@ -41,13 +44,16 @@ public class MainApp extends Application{
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane);
 		pane.setStyle("-fx-background: #013370;");
-		pane.setLeft(new RefPane(this));
+		
+		pane.setLeft(new VBox(new GamesPane(this), new RefPane(this)));
+		
 		pane.setCenter(logo);
 		BorderPane.setMargin(logo, new Insets(20,20,20,20));
 		
 		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Kungsbacka Domarprogram v1.0");
+		primaryStage.setMaximized(true);
 		primaryStage.show();
 		
 	}

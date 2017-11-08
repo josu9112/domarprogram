@@ -21,13 +21,13 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-public class RefPane extends TitledPane {
+public class GamesPane extends TitledPane {
 
 	public TableView<Referee> table;
 	public MainApp main;
 
 	@SuppressWarnings("unchecked")
-	public RefPane(MainApp mainWindow) {
+	public GamesPane(MainApp mainWindow) {
 		main = mainWindow;
 		Button b1 = new Button("Add");
 		b1.setOnAction(e -> addButtonAction());
@@ -74,7 +74,7 @@ public class RefPane extends TitledPane {
 
 		this.setFont(new Font("Sansation Bold", 20));
 		this.setStyle("-fx-text-fill: #000000; -fx-text-alignment: CENTER");
-		this.setText("Domare");
+		this.setText("Matcher");
 		this.setExpanded(false);
 		this.setContent(vbox1);
 		this.setPadding(new Insets(20, 20, 20, 20));
@@ -190,3 +190,4 @@ public class RefPane extends TitledPane {
 	}
 
 }
+

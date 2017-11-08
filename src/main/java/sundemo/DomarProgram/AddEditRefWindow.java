@@ -19,6 +19,8 @@ public class AddEditRefWindow extends Stage {
 	public CheckComboBox<Team> availableCoachTeams;
 	public CheckComboBox<Team> availablePlayTeams;
 	public Button addRefButton;
+	public TextField newTeamName;
+	public Button addNewTeamButton;
 	
 	public AddEditRefWindow(MainApp main) {
 		grid = new GridPane();
